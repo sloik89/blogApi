@@ -14,32 +14,51 @@ router.post("/", async (req, res) => {
 });
 // update
 router.put("/:id", async (req, res) => {
-  console.log(req.params.id);
+  console.log(req.body);
   try {
     const post = await Post.findById(req.params.id);
     if (post.username === req.body.username) {
       try {
-        const updatedPost = await Post.findByIdAndUpdate(
+        const updatePost = await Post.findByIdAndUpdate(
           req.params.id,
-          {
-            $set: req.body,
-          },
+          { $set: req.body },
           { new: true }
         );
-        return res.status(200).json(updatedPost);
+        444;
+        return res.status(200).json(updatePost);
       } catch (err) {
-        return res.status(401).json(err);
+        console.log(err);
       }
-    } else {
-      return res.status(401).json("you can update your post");
     }
   } catch (err) {
-    res.status(500).json({ msg: "something wrong ", error: err });
+    return res.status(500).json({ msg: "something wrong ", error: err });
   }
+  // try {
+  //   const post = await Post.findById(req.params.id);
+  //   if (post.username === req.body.username) {
+  //     try {
+  //       const updatedPost = await Post.findByIdAndUpdate(
+  //         req.params.id,
+  //         {
+  //           $set: req.body,
+  //         },
+  //         { new: true }
+  //       );
+  //       return res.status(200).json(updatedPost);
+  //     } catch (err) {
+  //       return res.status(401).json(err);
+  //     }
+  //   } else {
+  //     return res.status(401).json("you can update your post");
+  //   }
+  // } catch (err) {
+  //   res.status(500).json({ msg: "something wrong ", error: err });
+  // }
 });
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+
     if (post.username === req.body.username) {
       try {
         await post.deleteOne();
