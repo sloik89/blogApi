@@ -15,7 +15,7 @@ const categoryRoute = require("./routes/categories");
 const emailRoute = require("./routes/email");
 const path = require("path");
 const app = express();
-// app.use(express.static("./public"));
+app.use(express.static("./public"));
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 dotenv.config();
